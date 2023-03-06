@@ -4,15 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Tictactoe implements ActionListener {
+public class Tictactoe extends Container implements ActionListener {
     JFrame frame = new JFrame();
     JPanel title_panel = new JPanel();
     JPanel button_panel = new JPanel();
-    JPanel score_panel = new JPanel();
-    JLabel score_label = new JLabel();
+    JPanel score_panelx = new JPanel();
+    JLabel score_labelx = new JLabel();
+    JPanel score_panelo = new JPanel();
+    JLabel score_labelo = new JLabel();
     JLabel label = new JLabel();
     JButton[] buttons = new JButton[9];
     boolean playerOneTurn;
+    int countx = 0;
+    int counto = 0;
     Tictactoe(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,900);
@@ -30,15 +34,26 @@ public class Tictactoe implements ActionListener {
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0,0,80,100);
 
-        score_label.setBackground(Color.darkGray);
-        score_label.setForeground(Color.white);
-        score_label.setFont(new Font("Arial", Font.BOLD, 75));
-        score_label.setHorizontalAlignment(JLabel.CENTER);
-        score_label.setOpaque(true);
-        score_label.setText("teste");
+        score_labelx.setBackground(Color.darkGray);
+        score_labelx.setForeground(Color.white);
+        score_labelx.setFont(new Font("Arial", Font.BOLD, 75));
+        score_labelx.setOpaque(true);
+        score_labelx.setText("");
 
-        score_panel.setLayout(new BorderLayout());
-        score_panel.setBounds(0,0,80, 100);
+        score_labelo.setBackground(Color.darkGray);
+        score_labelo.setForeground(Color.white);
+        score_labelo.setFont(new Font("Arial", Font.BOLD, 75));
+        score_labelo.setOpaque(true);
+        score_labelo.setText("");
+
+        score_panelx.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        score_panelx.add(Box.createHorizontalStrut(50));
+        
+        score_panelx.setBounds(0,0,50, 100);
+
+        score_panelo.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+//        score_panelo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        score_panelo.setBounds(0,0,50,100);
 
         button_panel.setLayout(new GridLayout(3,3));
         button_panel.setBackground(Color.lightGray);
@@ -53,10 +68,12 @@ public class Tictactoe implements ActionListener {
         }
 
         title_panel.add(label);
-        score_panel.add(score_label);
+        score_panelx.add(score_labelx);
+        score_panelo.add(score_labelo);
         frame.add(title_panel,BorderLayout.NORTH);
         frame.add(button_panel);
-        frame.add(score_panel, BorderLayout.SOUTH);
+        frame.add(score_panelx);
+        frame.add(score_panelo);
         firstTurn();
     }
 
@@ -183,6 +200,8 @@ public class Tictactoe implements ActionListener {
             buttons[i].setEnabled(false);
         }
         label.setText("X wins");
+        countx++;
+        score_labelx.setText(String.valueOf(countx));
     }
 
     public void oWins(int a, int b, int c){
@@ -194,5 +213,7 @@ public class Tictactoe implements ActionListener {
             buttons[i].setEnabled(false);
         }
         label.setText("O wins");
+        counto++;
+        score_labelx.setText(String.valueOf(counto));
     }
 }
