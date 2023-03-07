@@ -2,18 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 public class Tictactoe extends Container implements ActionListener {
     JFrame frame = new JFrame();
     JPanel title_panel = new JPanel();
     JPanel button_panel = new JPanel();
-    JPanel score_panelx = new JPanel();
-    JLabel score_labelx = new JLabel();
-    JPanel score_panelo = new JPanel();
-    JLabel score_labelo = new JLabel();
     JLabel label = new JLabel();
     JButton[] buttons = new JButton[9];
+    JButton restart_button = new JButton();
     boolean playerOneTurn;
     int countx = 0;
     int counto = 0;
@@ -34,29 +30,20 @@ public class Tictactoe extends Container implements ActionListener {
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0,0,80,100);
 
-        score_labelx.setBackground(Color.darkGray);
-        score_labelx.setForeground(Color.white);
-        score_labelx.setFont(new Font("Arial", Font.BOLD, 75));
-        score_labelx.setOpaque(true);
-        score_labelx.setText("");
-
-        score_labelo.setBackground(Color.darkGray);
-        score_labelo.setForeground(Color.white);
-        score_labelo.setFont(new Font("Arial", Font.BOLD, 75));
-        score_labelo.setOpaque(true);
-        score_labelo.setText("");
-
-        score_panelx.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        score_panelx.add(Box.createHorizontalStrut(50));
-        
-        score_panelx.setBounds(0,0,50, 100);
-
-        score_panelo.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-//        score_panelo.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        score_panelo.setBounds(0,0,50,100);
-
         button_panel.setLayout(new GridLayout(3,3));
         button_panel.setBackground(Color.lightGray);
+
+        restart_button.setBackground(Color.lightGray);
+        restart_button.setFont(new Font("Arial", Font.BOLD,50));
+        restart_button.setText("Restart");
+        restart_button.setSize(80,40);
+        restart_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restart();
+
+            }
+        });
 
         for(int i = 0; i < 9; i++){
             buttons[i] = new JButton();
@@ -68,12 +55,10 @@ public class Tictactoe extends Container implements ActionListener {
         }
 
         title_panel.add(label);
-        score_panelx.add(score_labelx);
-        score_panelo.add(score_labelo);
+        title_panel.add(restart_button, BorderLayout.EAST);
         frame.add(title_panel,BorderLayout.NORTH);
         frame.add(button_panel);
-        frame.add(score_panelx);
-        frame.add(score_panelo);
+
         firstTurn();
     }
 
@@ -199,9 +184,8 @@ public class Tictactoe extends Container implements ActionListener {
         for(int i = 0; i < 9; i++){
             buttons[i].setEnabled(false);
         }
-        label.setText("X wins");
         countx++;
-        score_labelx.setText(String.valueOf(countx));
+        label.setText("X wins " + String.valueOf(countx));
     }
 
     public void oWins(int a, int b, int c){
@@ -212,8 +196,18 @@ public class Tictactoe extends Container implements ActionListener {
         for(int i = 0; i < 9; i++){
             buttons[i].setEnabled(false);
         }
-        label.setText("O wins");
         counto++;
-        score_labelx.setText(String.valueOf(counto));
+        label.setText("O wins " + String.valueOf(counto));
+    }
+
+    public void restart(){
+        for(int i = 0; i < 9; i++){
+            buttons[i].setBackground(Color.lightGray);
+            buttons[i].setText("");
+            buttons[i].setEnabled(true);
+        }
+        firstTurn();
+        check();
     }
 }
+
