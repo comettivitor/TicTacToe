@@ -173,6 +173,21 @@ public class Tictactoe extends Container implements ActionListener {
                         (buttons[4].getText() == "O") &&
                         (buttons[6].getText() == "O")){
             oWins(2,4,6);
+        }else {
+            for(int i = 0; i < 9; i++){
+                if(
+                        buttons[0].getText() != "" &&
+                        buttons[1].getText() != "" &&
+                        buttons[2].getText() != "" &&
+                        buttons[3].getText() != "" &&
+                        buttons[4].getText() != "" &&
+                        buttons[5].getText() != "" &&
+                        buttons[6].getText() != "" &&
+                        buttons[7].getText() != "" &&
+                        buttons[8].getText() != ""){
+                            draw();
+                }
+            }
         }
     }
 
@@ -198,6 +213,10 @@ public class Tictactoe extends Container implements ActionListener {
         }
         counto++;
         label.setText("O wins " + String.valueOf(counto));
+    }
+
+    public void draw(){
+        label.setText("It's a Draw!");
     }
 
     public void restart(){
